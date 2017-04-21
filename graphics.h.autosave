@@ -36,7 +36,9 @@ public slots:
 
 
 signals:
-
+    
+    
+    void on_close_app_from_gui();
 };
 
 #endif // GRAPHICS_H
