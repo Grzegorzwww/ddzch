@@ -2,9 +2,14 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "defines.h"
-#include "graphics.h"
+#include <QApplication>
+#include <graphics.h>
+#include <QDir>
+#include <QVariant>
 #include <QDebug>
+#include <QPalette>
+#include <QStyleFactory>
+
 
 namespace Ui {
 class MainWindow;
@@ -20,7 +25,11 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    Graphics *graphics;
+
+     Graphics *graphics;
+
+     void setDarkTheme(void);
+
 };
 
 #endif // MAINWINDOW_H
