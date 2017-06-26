@@ -17,6 +17,23 @@ Graphics::Graphics(Ui::MainWindow *_ui, QWidget *parent) : QWidget(parent),ui(_u
 
     connect(ui->pushButton_7, SIGNAL(clicked(bool)), this, SLOT(on_next_clicked(bool)));
 
+
+
+    connect(ui->pushButton_8, SIGNAL(clicked()), this, SLOT(on_period_yes_clicked()));
+    connect(ui->pushButton_9, SIGNAL(clicked()), this, SLOT(on_period_no_clicked()));
+    connect(ui->horizontalSlider, SIGNAL(valueChanged(int)), this, SLOT(on_period_value_change(int)));
+    connect(ui->pushButton_10, SIGNAL(clicked()), this, SLOT(on_headache_yes_clicked()));
+    connect(ui->pushButton_11, SIGNAL(clicked()), this, SLOT(on_headache_no_clicked()));
+    connect(ui->horizontalSlider_2, SIGNAL(valueChanged(int)), this, SLOT(on_headache_value_change(int)));
+    connect(ui->pushButton_12, SIGNAL(clicked()), this, SLOT(on_stomachache_yes_clicked()));
+    connect(ui->pushButton_13, SIGNAL(clicked()), this, SLOT(on_stomachache_no_clicked()));
+    connect(ui->horizontalSlider_3, SIGNAL(valueChanged(int)), this, SLOT(on_stomachache_value_change(int)));
+
+
+    connect(ui->groupBox, SIGNAL(clicked()), this, SLOT(on_slot()));
+
+
+
 }
 
 void Graphics::inicjalizeGraphicsGUI(void){
@@ -26,9 +43,7 @@ void Graphics::inicjalizeGraphicsGUI(void){
 
      ui->horizontalSlider->setStyleSheet("QSlider::handle:horizontal {background-color: white;}");
 
-
      ui->horizontalSlider->setStyleSheet("QSlider::handle:horizontal {background-color: white;}");
-
 
      ui->horizontalSlider_2->setStyleSheet("QSlider::handle:horizontal {background-color: white;}");
      ui->horizontalSlider_3->setStyleSheet("QSlider::handle:horizontal {background-color: white;}");
@@ -36,6 +51,25 @@ void Graphics::inicjalizeGraphicsGUI(void){
      ui->pushButton_8->setCheckable(true);
      ui->pushButton_9->setCheckable(true);
 
+     ui->pushButton_10->setCheckable(true);
+     ui->pushButton_11->setCheckable(true);
+
+
+
+     ui->pushButton_12->setCheckable(true);
+     ui->pushButton_13->setCheckable(true);
+
+     parameters_tags.append("PERIOD");
+     parameters_tags.append("GLOWA");
+     parameters_tags.append("BRZUCH");
+     parameters_tags.append("STOO");
+     parameters_tags.append("ALCO");
+     parameters_tags.append("WATER");
+     parameters_tags.append("SPEEP");
+     parameters_tags.append("SCAREE");
+     parameters_tags.append("PILLS");
+     parameters_tags.append("CHIPS");
+     parameters_tags.append("SWEET");
 
 }
 
@@ -89,20 +123,34 @@ void Graphics::on_next_clicked(bool x){
         control_tab(WPROWADZ_WSZYSTKO_CZ4_INDEX);
 
         break;
-
-
-
     }
-
 }
-
-
-
 
 
 void Graphics::on_save_data_button_clicked(bool x){
 
 
 }
+
+void Graphics::getParameters(Parameters_t &param){
+        param = parameters;
+
+  }
+
+
+ void Graphics::actualice_list(int x){
+
+     switch(x) {
+     case 1:
+         ui->label;
+
+
+
+
+     }
+
+
+
+ }
 
 

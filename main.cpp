@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationName("grzegorz warchol");
     QCoreApplication::setApplicationName("aplikacja");
 
-
+//    xlsx.write("A1", "Hello Qt!");
 
     MainWindow w;
     w.show();

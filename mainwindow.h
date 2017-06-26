@@ -9,6 +9,9 @@
 #include <QDebug>
 #include <QPalette>
 #include <QStyleFactory>
+#include <QTimer>
+#include "time_date_control.h"
+#include "log.h"
 
 
 namespace Ui {
@@ -27,8 +30,18 @@ private:
     Ui::MainWindow *ui;
 
      Graphics *graphics;
+     TimeDateControl *time_date_control;
+     Log *log;
+
+     Parameters_t Param;
 
      void setDarkTheme(void);
+
+
+private slots:
+
+
+     void on_save_and_close_app();
 
 };
 

@@ -11,6 +11,7 @@
 
 const QString GRUPA_USTAWIEN = "settings_group";
 const QString OSTATNIE_WYLACZENIE_KOMPUTERA = "ostatnie_wylaczenie";
+const QString REKORD_XLSX_DO_ZAPISU = "ostatni_record_xlsx";
 
 
 typedef struct app_settings_s {
@@ -18,7 +19,7 @@ typedef struct app_settings_s {
   QDateTime last_app_turn_off;
   QString last_log_record;
 
-} app_settings_s;
+} app_settings_t;
 
 
 
@@ -112,12 +113,12 @@ typedef struct Parameters_s {
     yesno_token_t alco;
     value_token_t water;
     face_token_t face;
-    yesno_token_s sleep;
-    yesno_token_s exx;
-    yesno_token_s scare;
-    yesno_token_s pills;
-    yesno_token_s chips;
-    yesno_token_s sweet;
+    yesno_token_t sleep;
+    yesno_token_t exx;
+    value_token_t scare;
+    yesno_token_t pills;
+    yesno_token_t chips;
+    yesno_token_t sweet;
     food_token_t food;
 
 } Parameters_t;

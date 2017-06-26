@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 //#include <QtXlsx>
-#include "xlsxdocument.h"
+
 #include <iostream>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -12,27 +12,25 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     graphics = new Graphics(ui,this);
+
+    time_date_control = new TimeDateControl();
+    time_date_control->load_app_settings();
+    log = new Log( time_date_control->getLastRecord());
+
+
+    if(time_date_control->check_first_turn_on())
+       //ui->label_24->setText( "OK"   );
+       ;
+    else{
+       // ui->label_24->setText( "FALSE"   );
+        ;
+    }
+
     setDarkTheme();
 
 
 
-
-        QXlsx::Document xlsx;
-        QXlsx::Document xlsx_2("Test.xlsx");
-
-//        xlsx.write("A1", "Hello Qt!");
-//        xlsx.saveAs("Test.xlsx");
-        QVariant var;
-        var = xlsx_2.read("A1");
-
-//        qDebug() << QDir::currentPath();
-//        std::cout << QDir::currentPath().toStdString();
-
-        ui->label_4->setText(var.toString());
-
-
-
-    connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(close()));
+    connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(on_save_and_close_app()));
 }
 
 MainWindow::~MainWindow()
@@ -63,8 +61,17 @@ void MainWindow::setDarkTheme(void){
     darkPalette.setColor(QPalette::HighlightedText, Qt::black);
     qApp->setPalette(darkPalette);
 
-
-
-
     qApp->setStyleSheet("QToolTip { color: #ffffff; background-color: #2a82da; border: 1px solid white; }");
+}
+
+void MainWindow::on_save_and_close_app(){
+     graphics->getParameters(Param);
+
+    if(log->saveLog(Param,  time_date_control->getLastRecord())){
+        this->close();
+    }
+
+
+
+
 }
