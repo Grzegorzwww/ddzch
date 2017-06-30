@@ -16,7 +16,7 @@ class Log : public QObject
 public:
     explicit Log(int x, QObject *parent = 0);
     bool saveLog(Parameters_t param, int last_record);
-
+    bool readLog(Parameters_t &param, int last_record);
 
 private:
     QXlsx::Document xlsx;

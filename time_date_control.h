@@ -33,9 +33,6 @@ private:
 
 
 
-
-
-
 };
 
 #endif // TIME_DATE_CONTROL_H

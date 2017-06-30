@@ -10,8 +10,12 @@
 
 
 const QString GRUPA_USTAWIEN = "settings_group";
+const QString GRUPA_KOSMO = "kosmo_group";
+
+
 const QString OSTATNIE_WYLACZENIE_KOMPUTERA = "ostatnie_wylaczenie";
 const QString REKORD_XLSX_DO_ZAPISU = "ostatni_record_xlsx";
+const QString LISTA_KOSMO = "kosmo_list";
 
 
 typedef struct app_settings_s {
@@ -29,6 +33,8 @@ static const int WPROWADZ_WSZYSTKO_INDEX = 1;
 static const int WPROWADZ_WSZYSTKO_CZ2_INDEX = 4;
 static const int WPROWADZ_WSZYSTKO_CZ3_INDEX= 5;
 static const int WPROWADZ_WSZYSTKO_CZ4_INDEX = 6;
+static const int WPROWADZ_KOSMO_INDEX = 7;
+static const int WPROWADZ_FOOD_INDEX = 8;
 
 static const int MODYFIKUJ_ZAPISY_INDEX = 2;
 static const int DODAJ_PARAMETR_INDEX = 3;
@@ -88,12 +94,19 @@ typedef struct face_token_s {
 }face_token_t;
 
 
-typedef struct face_state_token_s {
+typedef struct used_kosmo_token_s {
     int no;
     param_type_t param_type;
+    QString kosmo_1;
+    QString kosmo_2;
+    QString kosmo_3;
+    QString kosmo_4;
+    QString kosmo_5;
+    QString kosmo_6;
 
 
-} face_state_token_t;
+
+} used_kosmo_token_t;
 
 
 typedef struct food_token_s {
@@ -112,14 +125,21 @@ typedef struct Parameters_s {
     double_value_token_t sto;
     yesno_token_t alco;
     value_token_t water;
-    face_token_t face;
+    face_token_t face_1;
+    face_token_t face_2;
+    face_token_t face_3;
+    face_token_t face_4;
+    face_token_t face_trend;
     yesno_token_t sleep;
     yesno_token_t exx;
     value_token_t scare;
     yesno_token_t pills;
     yesno_token_t chips;
     yesno_token_t sweet;
+    used_kosmo_token_t kosmo;
     food_token_t food;
+
+    QDateTime read_date_time;
 
 } Parameters_t;
 

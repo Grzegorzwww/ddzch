@@ -36,9 +36,9 @@ HEADERS  += mainwindow.h \
     time_date_control.h \
     log.h
 
-
-
-include(/home/gwarchol/qt_workspace/android_app/xlsx/QtXlsxWriter-master/src/xlsx/qtxlsx.pri)
+#/home/gwarchol/qt_workspace/android_app/android_test_3/xlsx/QtXlsxWriter-master/src/xlsx
+#include(/home/gwarchol/qt_workspace/android_app/xlsx/QtXlsxWriter-master/src/xlsx/qtxlsx.pri)
+include(/home/gwarchol/qt_workspace/android_app/android_test_3/xlsx/QtXlsxWriter-master/src/xlsx/qtxlsx.pri)
 
 FORMS    += mainwindow.ui
 
@@ -46,8 +46,7 @@ FORMS    += mainwindow.ui
 CONFIG += mobility
 MOBILITY = 
 
-RESOURCES += \
-    pix.qrc
+RESOURCES +=
 
 DISTFILES +=
 
