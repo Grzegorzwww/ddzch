@@ -35,6 +35,11 @@ void Log::initLog() {
 
      xlsx.write("T1", "kosmetyki wieczorem");
 
+      xlsx.write("U1", "SNIADANIE");
+      xlsx.write("V1", "OBIAD");
+      xlsx.write("W1", "KOLACJA");
+      xlsx.write("X1", "INNE");
+
 
     xlsx.save();
     qDebug() << "Jestem w initLog()";
@@ -140,12 +145,64 @@ bool Log::saveLog(Parameters_t param, int last_record) {
     temp = param.face_trend.trend;
     xlsx.write("R"+QString::number(last_record), temp);
 
+//TODO:
 
-    temp = param.kosmo.kosmo_1 +", "+ param.kosmo.kosmo_2 +", "+ param.kosmo.kosmo_3;
+    temp.clear();
+    for(int i = 0; i < param.kosmo.rano.size(); i++){
+        if(param.kosmo.rano.at(i) != param.kosmo.rano.last())
+            temp += param.kosmo.rano.at(i)+" - ";
+        else
+            temp += param.kosmo.rano.at(i);
+    }
     xlsx.write("S"+QString::number(last_record), temp);
 
-    temp = param.kosmo.kosmo_4 +", "+ param.kosmo.kosmo_5  +", "+ param.kosmo.kosmo_6;
+
+    temp.clear();
+    for(int i = 0; i < param.kosmo.wieczor.size(); i++){
+        if(param.kosmo.wieczor.at(i) != param.kosmo.wieczor.last())
+            temp += param.kosmo.wieczor.at(i)+" - ";
+        else
+            temp += param.kosmo.wieczor.at(i);
+    }
     xlsx.write("T"+QString::number(last_record), temp);
+
+
+    temp.clear();
+    for(int i = 0; i < param.food.sniadanie.size(); i++){
+        if(param.food.sniadanie.at(i) != param.food.sniadanie.last())
+            temp += param.food.sniadanie.at(i)+" - ";
+        else
+            temp += param.food.sniadanie.at(i);
+    }
+    xlsx.write("U"+QString::number(last_record), temp);
+
+    temp.clear();
+    for(int i = 0; i < param.food.obiad.size(); i++){
+        if(param.food.obiad.at(i) != param.food.obiad.last())
+            temp += param.food.obiad.at(i)+" - ";
+        else
+            temp += param.food.obiad.at(i);
+    }
+    xlsx.write("V"+QString::number(last_record), temp);
+
+    temp.clear();
+    for(int i = 0; i < param.food.kolacja.size(); i++){
+        if(param.food.kolacja.at(i) != param.food.kolacja.last())
+            temp += param.food.kolacja.at(i)+" - ";
+        else
+            temp += param.food.kolacja.at(i);
+    }
+    xlsx.write("W"+QString::number(last_record), temp);
+
+    temp.clear();
+    for(int i = 0; i < param.food.inne.size(); i++){
+        if(param.food.inne.at(i) != param.food.inne.last())
+            temp += param.food.inne.at(i)+" - ";
+        else
+            temp += param.food.inne.at(i);
+    }
+    xlsx.write("X"+QString::number(last_record), temp);
+
 
 
     xlsx.save();
@@ -155,11 +212,6 @@ bool Log::saveLog(Parameters_t param, int last_record) {
 
 
 bool Log::readLog(Parameters_t &param, int last_record){
-
-
-
-
-
 
     QString read_str;
 
@@ -287,21 +339,42 @@ bool Log::readLog(Parameters_t &param, int last_record){
 
 
       read_str = xlsx.read("S"+QString::number(last_record)).toString();
-      param.kosmo.kosmo_1 = read_str.split(", ")[0];
-      param.kosmo.kosmo_2 = read_str.split(", ")[1];
-      param.kosmo.kosmo_3 = read_str.split(", ")[2];
+      param.kosmo.rano = read_str.split(" - ");
+      for(int i = 0; i < param.kosmo.rano.size(); i++ )
+            param.kosmo.rano[i].replace("-","");
+
+
 
       read_str = xlsx.read("T"+QString::number(last_record)).toString();
-      param.kosmo.kosmo_4 = read_str.split(", ")[0];
-      param.kosmo.kosmo_5 = read_str.split(", ")[1];
-      param.kosmo.kosmo_6 = read_str.split(", ")[2];
+      param.kosmo.wieczor = read_str.split(" -  ");
+      for(int i = 0; i < param.kosmo.wieczor.size(); i++ )
+            param.kosmo.wieczor[i].replace("-","");
 
 
+      read_str = xlsx.read("U"+QString::number(last_record)).toString();
+      param.food.sniadanie = read_str.split(" -  ");
+      for(int i = 0; i < param.food.sniadanie.size(); i++ )
+            param.food.sniadanie[i].replace("-","");
 
 
-//    qDebug() <<  "param.read_date_time = "<< param.read_date_time.toString();
-//    qDebug() <<  "param.period = "<< param.period.state;
-//    qDebug() <<  " param.periodache.value = "<<  param.periodache.value;
+      read_str = xlsx.read("V"+QString::number(last_record)).toString();
+      param.food.obiad = read_str.split(" -  ");
+      for(int i = 0; i < param.food.obiad.size(); i++ )
+            param.food.obiad[i].replace("-","");
+
+
+      read_str = xlsx.read("W"+QString::number(last_record)).toString();
+      param.food.kolacja = read_str.split(" -  ");
+      for(int i = 0; i < param.food.kolacja.size(); i++ )
+            param.food.kolacja[i].replace("-","");
+
+
+      read_str = xlsx.read("X"+QString::number(last_record)).toString();
+      param.food.inne = read_str.split(" -  ");
+      for(int i = 0; i < param.food.inne.size(); i++ )
+            param.food.inne[i].replace("-","");
+
+
 
       return true;
     }

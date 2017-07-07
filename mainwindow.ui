@@ -173,12 +173,15 @@
        </font>
       </property>
       <property name="currentIndex">
-       <number>8</number>
+       <number>9</number>
       </property>
       <widget class="QWidget" name="page">
        <layout class="QGridLayout" name="gridLayout_2">
         <item row="2" column="0">
          <widget class="QPushButton" name="pushButton_6">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>
@@ -197,6 +200,9 @@
         </item>
         <item row="1" column="0">
          <widget class="QPushButton" name="pushButton_4">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>0</horstretch>
@@ -228,13 +234,6 @@
           </property>
           <property name="text">
            <string>WPROWADZ WSZYSTKO</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="label_4">
-          <property name="text">
-           <string>TextLabel</string>
           </property>
          </widget>
         </item>
@@ -1379,8 +1378,8 @@
        </layout>
       </widget>
       <widget class="QWidget" name="page_8">
-       <layout class="QGridLayout" name="gridLayout_20">
-        <item row="0" column="0">
+       <layout class="QGridLayout" name="gridLayout_22">
+        <item row="0" column="0" colspan="2">
          <widget class="QGroupBox" name="groupBox_14">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
@@ -1404,7 +1403,7 @@
           <property name="title">
            <string>DODAJ</string>
           </property>
-          <layout class="QGridLayout" name="gridLayout_21">
+          <layout class="QGridLayout" name="gridLayout_20">
            <item row="0" column="0">
             <layout class="QHBoxLayout" name="horizontalLayout_25">
              <item>
@@ -1520,183 +1519,64 @@
          </widget>
         </item>
         <item row="1" column="0">
-         <widget class="QGroupBox" name="groupBox_15">
-          <property name="font">
-           <font>
-            <pointsize>18</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
+         <widget class="QPushButton" name="pushButton_26">
+          <property name="text">
+           <string>RANO </string>
           </property>
-          <property name="title">
-           <string>RANO</string>
-          </property>
-          <layout class="QGridLayout" name="gridLayout_22">
-           <item row="0" column="0">
-            <widget class="QComboBox" name="comboBox_9">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="editable">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QComboBox" name="comboBox_10">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="editable">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QComboBox" name="comboBox_11">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="editable">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-          </layout>
          </widget>
         </item>
-        <item row="2" column="0">
-         <widget class="QGroupBox" name="groupBox_16">
-          <property name="font">
-           <font>
-            <pointsize>18</pointsize>
-            <weight>75</weight>
-            <bold>true</bold>
-           </font>
+        <item row="1" column="1">
+         <widget class="QPushButton" name="pushButton_27">
+          <property name="text">
+           <string>WIECZOR</string>
           </property>
-          <property name="title">
-           <string>RANO</string>
+         </widget>
+        </item>
+        <item row="2" column="0" colspan="2">
+         <widget class="QStackedWidget" name="stackedWidget_3">
+          <property name="currentIndex">
+           <number>0</number>
           </property>
-          <layout class="QGridLayout" name="gridLayout_23">
-           <item row="0" column="0">
-            <widget class="QComboBox" name="comboBox_12">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="editable">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QComboBox" name="comboBox_13">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="editable">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QComboBox" name="comboBox_14">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="editable">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-          </layout>
+          <widget class="QWidget" name="page_14">
+           <layout class="QGridLayout" name="gridLayout_21">
+            <item row="0" column="0">
+             <widget class="QTableView" name="tableView">
+              <property name="editTriggers">
+               <set>QAbstractItemView::NoEditTriggers</set>
+              </property>
+              <property name="selectionMode">
+               <enum>QAbstractItemView::ContiguousSelection</enum>
+              </property>
+              <property name="selectionBehavior">
+               <enum>QAbstractItemView::SelectItems</enum>
+              </property>
+              <property name="textElideMode">
+               <enum>Qt::ElideLeft</enum>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="page_15">
+           <layout class="QGridLayout" name="gridLayout_23">
+            <item row="0" column="0">
+             <widget class="QTableView" name="tableView_2">
+              <property name="editTriggers">
+               <set>QAbstractItemView::NoEditTriggers</set>
+              </property>
+              <property name="selectionMode">
+               <enum>QAbstractItemView::ContiguousSelection</enum>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
          </widget>
         </item>
        </layout>
       </widget>
       <widget class="QWidget" name="page_9">
-       <layout class="QGridLayout" name="gridLayout_26">
-        <item row="0" column="0">
-         <layout class="QHBoxLayout" name="horizontalLayout_31">
-          <item>
-           <widget class="QRadioButton" name="radioButton">
-            <property name="font">
-             <font>
-              <pointsize>16</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>POSILKI</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QRadioButton" name="radioButton_2">
-            <property name="font">
-             <font>
-              <pointsize>16</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>PRZEKASKI</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QRadioButton" name="radioButton_3">
-            <property name="font">
-             <font>
-              <pointsize>16</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>OWOC</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QRadioButton" name="radioButton_4">
-            <property name="font">
-             <font>
-              <pointsize>16</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>WARZYWO</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QRadioButton" name="radioButton_5">
-            <property name="font">
-             <font>
-              <pointsize>16</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>INNE</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
+       <layout class="QGridLayout" name="gridLayout_25">
         <item row="1" column="0">
          <widget class="QGroupBox" name="groupBox_17">
           <property name="sizePolicy">
@@ -1889,152 +1769,108 @@
          </layout>
         </item>
         <item row="3" column="0">
-         <widget class="QStackedWidget" name="stackedWidget_2">
-          <property name="currentIndex">
-           <number>0</number>
+         <widget class="QTableView" name="tableView_3"/>
+        </item>
+        <item row="0" column="0">
+         <widget class="QGroupBox" name="groupBox_15">
+          <property name="title">
+           <string>WYBOR JEDZENIA</string>
           </property>
-          <widget class="QWidget" name="page_10">
-           <layout class="QGridLayout" name="gridLayout_25">
-            <item row="5" column="0">
-             <widget class="QComboBox" name="comboBox_29"/>
-            </item>
-            <item row="2" column="1">
-             <widget class="QComboBox" name="comboBox_20">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+          <widget class="QWidget" name="">
+           <property name="geometry">
+            <rect>
+             <x>10</x>
+             <y>30</y>
+             <width>725</width>
+             <height>36</height>
+            </rect>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_31">
+            <item>
+             <widget class="QRadioButton" name="radioButton">
+              <property name="font">
+               <font>
+                <pointsize>16</pointsize>
+               </font>
               </property>
-              <property name="editable">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="1">
-             <widget class="QComboBox" name="comboBox_21">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="editable">
-               <bool>true</bool>
+              <property name="text">
+               <string>POSILKI</string>
               </property>
              </widget>
             </item>
-            <item row="6" column="1">
-             <widget class="QComboBox" name="comboBox_24">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+            <item>
+             <widget class="QRadioButton" name="radioButton_2">
+              <property name="font">
+               <font>
+                <pointsize>16</pointsize>
+               </font>
               </property>
-              <property name="editable">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="0">
-             <widget class="QComboBox" name="comboBox_28"/>
-            </item>
-            <item row="4" column="1">
-             <widget class="QComboBox" name="comboBox_22">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="editable">
-               <bool>true</bool>
+              <property name="text">
+               <string>PRZEKASKI</string>
               </property>
              </widget>
             </item>
-            <item row="0" column="0">
-             <widget class="QComboBox" name="comboBox_16"/>
-            </item>
-            <item row="1" column="0">
-             <widget class="QComboBox" name="comboBox_25"/>
-            </item>
-            <item row="2" column="0">
-             <widget class="QComboBox" name="comboBox_26"/>
-            </item>
-            <item row="5" column="1">
-             <widget class="QComboBox" name="comboBox_23">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+            <item>
+             <widget class="QRadioButton" name="radioButton_3">
+              <property name="font">
+               <font>
+                <pointsize>16</pointsize>
+               </font>
               </property>
-              <property name="editable">
-               <bool>true</bool>
+              <property name="text">
+               <string>OWOC</string>
               </property>
              </widget>
             </item>
-            <item row="1" column="1">
-             <widget class="QComboBox" name="comboBox_19">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+            <item>
+             <widget class="QRadioButton" name="radioButton_4">
+              <property name="font">
+               <font>
+                <pointsize>16</pointsize>
+               </font>
               </property>
-              <property name="editable">
-               <bool>true</bool>
+              <property name="text">
+               <string>WARZYWO</string>
               </property>
              </widget>
             </item>
-            <item row="6" column="0">
-             <widget class="QComboBox" name="comboBox_30"/>
-            </item>
-            <item row="3" column="0">
-             <widget class="QComboBox" name="comboBox_27"/>
-            </item>
-            <item row="0" column="1">
-             <widget class="QComboBox" name="comboBox_18">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
+            <item>
+             <widget class="QRadioButton" name="radioButton_5">
+              <property name="font">
+               <font>
+                <pointsize>16</pointsize>
+               </font>
               </property>
-              <property name="editable">
-               <bool>true</bool>
+              <property name="text">
+               <string>INNE</string>
               </property>
              </widget>
             </item>
            </layout>
           </widget>
-          <widget class="QWidget" name="page_11"/>
          </widget>
         </item>
        </layout>
-       <zorder>groupBox_17</zorder>
-       <zorder>radioButton</zorder>
-       <zorder>radioButton_2</zorder>
-       <zorder>radioButton_3</zorder>
-       <zorder>radioButton_4</zorder>
-       <zorder>radioButton_5</zorder>
-       <zorder>layoutWidget</zorder>
-       <zorder>stackedWidget_2</zorder>
-       <zorder>comboBox_18</zorder>
-       <zorder>comboBox_27</zorder>
-       <zorder>comboBox_30</zorder>
-       <zorder>comboBox_19</zorder>
-       <zorder>comboBox_23</zorder>
-       <zorder>comboBox_26</zorder>
-       <zorder>comboBox_25</zorder>
-       <zorder>comboBox_24</zorder>
-       <zorder>comboBox_22</zorder>
-       <zorder>comboBox_28</zorder>
-       <zorder>comboBox_16</zorder>
-       <zorder>comboBox_29</zorder>
-       <zorder>comboBox_20</zorder>
-       <zorder>comboBox_21</zorder>
+      </widget>
+      <widget class="QWidget" name="page_10">
+       <widget class="QLabel" name="label_4">
+        <property name="geometry">
+         <rect>
+          <x>130</x>
+          <y>200</y>
+          <width>361</width>
+          <height>191</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>29</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>LUBIC G TR</string>
+        </property>
+       </widget>
       </widget>
      </widget>
     </item>

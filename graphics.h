@@ -6,7 +6,9 @@
 #include <QDebug>
 #include <QList>
 #include <QSettings>
+#include <QStandardItem>
 #include "defines.h"
+ #include <QMessageBox>
 
 
 class Graphics : public QWidget
@@ -32,11 +34,19 @@ private:
 
 
 
+
     QStringList posilki_list;
     QStringList przekaski_list;
     QStringList owoce_list;
     QStringList warzywa_list;
     QStringList inne_list;
+
+    QStandardItemModel *kosmo_table_model;
+    QStandardItemModel *kosmo_wieczor_table_model;
+
+     QStandardItemModel *food_table_model;
+
+
 
 
 
@@ -45,12 +55,18 @@ private:
     void initParam();
     void control_tab(int actual);
     void actualice_list(int x);
-    void actualiceKosmoCombo();
+    void actualiceKosmo();
+    void createTabWidgets();
 
 
     void writeListToIniFile(QStringList &list, QString list_name);
     void readListFromIniFile(QStringList &list, QString list_name);
     void removeItemFromList(QStringList &list, QString list_name, QString item_name);
+    void addListToTable(QStandardItemModel &model,  QStringList &list);
+    void fillFoodTable(QStandardItemModel *model, QStringList list, bool clear);
+    void fillTable(QStandardItemModel *model, QStringList list, bool clear);
+    QStringList getActualFoodList();
+    void actualiceCheckedFood();
 
 
 
@@ -119,20 +135,38 @@ public slots:
     void on_dodaj_food_clicked();
     void on_usun_food_clicked();
 
+    void on_set_rano_tab();
+    void on_set_wieczor_tab();
 
 
-    void on_kosmo_1_change(QString text);
-    void on_kosmo_2_change(QString text);
-    void on_kosmo_3_change(QString text);
-    void on_kosmo_4_change(QString text);
-    void on_kosmo_5_change(QString text);
-    void on_kosmo_6_change(QString text);
+
+
+    void on_kosmo_rano_change(QString text);
+
 
     void on_posilki_checked();
     void on_przekaski_checked();
     void on_owoce_checked();
     void on_warzywa_checked();
     void on_inne_checked();
+
+    void on_sniadanie_checked();
+    void on_obiad_checked();
+    void on_kolacja_checked();
+    void on_inne_posilki_checked();
+
+
+
+
+
+    void on_tableView_rano_customContextMenuRequested(const QPoint &pos);
+     void on_tableView_wieczor_customContextMenuRequested(const QPoint &pos);
+
+    void on_tableView_clicked(QModelIndex index);
+    void on_tableView_2_clicked(QModelIndex index);
+    void on_tableView_3_clicked(QModelIndex index);
+
+
 
 
 

@@ -85,11 +85,15 @@ void MainWindow::setDarkTheme(void){
 void MainWindow::on_save_and_close_app(){
      graphics->getParameters(Param);
 
+
     if(log->saveLog(Param,  time_date_control->getLastRecord())){
-        this->close();
+
+        if(ui->stackedWidget->currentIndex() == WPROWADZ_FOOD_INDEX ){
+            ui->stackedWidget->setCurrentIndex(LAST_INFO_INDEX);
+            QTimer::singleShot(1500, this, SLOT(close()));
+        }
+        else
+            this->close();
     }
-
-
-
 
 }

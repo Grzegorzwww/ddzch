@@ -35,6 +35,7 @@ static const int WPROWADZ_WSZYSTKO_CZ3_INDEX= 5;
 static const int WPROWADZ_WSZYSTKO_CZ4_INDEX = 6;
 static const int WPROWADZ_KOSMO_INDEX = 7;
 static const int WPROWADZ_FOOD_INDEX = 8;
+static const int LAST_INFO_INDEX = 9;
 
 static const int MODYFIKUJ_ZAPISY_INDEX = 2;
 static const int DODAJ_PARAMETR_INDEX = 3;
@@ -97,12 +98,8 @@ typedef struct face_token_s {
 typedef struct used_kosmo_token_s {
     int no;
     param_type_t param_type;
-    QString kosmo_1;
-    QString kosmo_2;
-    QString kosmo_3;
-    QString kosmo_4;
-    QString kosmo_5;
-    QString kosmo_6;
+    QStringList rano;
+    QStringList wieczor;
 
 
 
@@ -112,7 +109,10 @@ typedef struct used_kosmo_token_s {
 typedef struct food_token_s {
     int no;
     param_type_t param_type;
-    //TODO: Zaimplementowac typ danych przechowujacy jedzenie
+    QStringList sniadanie;
+    QStringList obiad;
+    QStringList kolacja;
+    QStringList inne;
 } food_token_t;
 
 

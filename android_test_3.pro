@@ -38,7 +38,7 @@ HEADERS  += mainwindow.h \
 
 #/home/gwarchol/qt_workspace/android_app/android_test_3/xlsx/QtXlsxWriter-master/src/xlsx
 #include(/home/gwarchol/qt_workspace/android_app/xlsx/QtXlsxWriter-master/src/xlsx/qtxlsx.pri)
-include(/home/gwarchol/qt_workspace/android_app/android_test_3/xlsx/QtXlsxWriter-master/src/xlsx/qtxlsx.pri)
+include(/home/gwarchol/qt_workspace/android_app/xlsx/QtXlsxWriter-master/src/xlsx/qtxlsx.pri)
 
 FORMS    += mainwindow.ui
 

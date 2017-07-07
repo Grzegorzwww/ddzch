@@ -42,7 +42,6 @@ Graphics::Graphics(Ui::MainWindow *_ui, QWidget *parent) : QWidget(parent),ui(_u
     connect(ui->pushButton_24, SIGNAL(clicked()), this, SLOT(on_sweet_yes_clicked()));
     connect(ui->pushButton_25, SIGNAL(clicked()), this, SLOT( on_sweet_no_clicked()));
 
-
     connect(ui->comboBox, SIGNAL(currentTextChanged(QString)), this, SLOT(on_face_place_1_change(QString)));
     connect(ui->comboBox_3, SIGNAL(currentTextChanged(QString)), this, SLOT(on_face_place_2_change(QString)));
     connect(ui->comboBox_5, SIGNAL(currentTextChanged(QString)), this, SLOT(on_face_place_3_change(QString)));
@@ -53,18 +52,15 @@ Graphics::Graphics(Ui::MainWindow *_ui, QWidget *parent) : QWidget(parent),ui(_u
     connect(ui->comboBox_8, SIGNAL(currentTextChanged(QString)), this, SLOT(on_face_state_4_change(QString)));
     connect(ui->horizontalSlider_8, SIGNAL(valueChanged(int)), this, SLOT(on_face_trend_value_change(int)));
 
-
     connect(ui->pushButton_28, SIGNAL(clicked()), this, SLOT(on_dodaj_kosmo_clicked()));
     connect(ui->pushButton_32, SIGNAL(clicked()), this, SLOT(on_usun_kosmo_clicked()));
 
+    connect(ui->tableView, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(on_tableView_rano_customContextMenuRequested(QPoint)));
+    connect(ui->tableView, SIGNAL(clicked(QModelIndex)), this, SLOT(on_tableView_clicked(QModelIndex)));
 
+    connect(ui->tableView_2, SIGNAL(clicked(QModelIndex)), this, SLOT(on_tableView_2_clicked(QModelIndex)));
+    connect(ui->tableView_3, SIGNAL(clicked(QModelIndex)), this, SLOT(on_tableView_3_clicked(QModelIndex)));
 
-    connect(ui->comboBox_9, SIGNAL(currentTextChanged(QString)), this, SLOT(on_kosmo_1_change(QString)));
-    connect(ui->comboBox_10, SIGNAL(currentTextChanged(QString)), this, SLOT(on_kosmo_2_change(QString)));
-    connect(ui->comboBox_11, SIGNAL(currentTextChanged(QString)), this, SLOT(on_kosmo_3_change(QString)));
-    connect(ui->comboBox_12, SIGNAL(currentTextChanged(QString)), this, SLOT(on_kosmo_4_change(QString)));
-    connect(ui->comboBox_13, SIGNAL(currentTextChanged(QString)), this, SLOT(on_kosmo_5_change(QString)));
-    connect(ui->comboBox_14, SIGNAL(currentTextChanged(QString)), this, SLOT(on_kosmo_6_change(QString)));
 
 
     connect(ui->radioButton, SIGNAL(pressed()), this, SLOT(on_posilki_checked()));
@@ -74,9 +70,17 @@ Graphics::Graphics(Ui::MainWindow *_ui, QWidget *parent) : QWidget(parent),ui(_u
     connect(ui->radioButton_5, SIGNAL(pressed()), this, SLOT(on_inne_checked()));
 
 
+     connect(ui->radioButton_6, SIGNAL(pressed()), this, SLOT(on_sniadanie_checked()));
+     connect(ui->radioButton_7, SIGNAL(pressed()), this, SLOT(on_obiad_checked()));
+     connect(ui->radioButton_8, SIGNAL(pressed()), this, SLOT(on_kolacja_checked()));
+     connect(ui->radioButton_9, SIGNAL(pressed()), this, SLOT(on_inne_posilki_checked()));
+
+
     connect(ui->pushButton_29, SIGNAL(clicked()), this, SLOT(on_dodaj_food_clicked()));
     connect(ui->pushButton_42, SIGNAL(clicked()), this, SLOT(on_usun_food_clicked()));
 
+    connect(ui->pushButton_26, SIGNAL(clicked()), this, SLOT(on_set_rano_tab()));
+    connect(ui->pushButton_27, SIGNAL(clicked()), this, SLOT(on_set_wieczor_tab()));
 
 
     connect(ui->groupBox, SIGNAL(clicked()), this, SLOT(on_slot()));
@@ -119,6 +123,8 @@ void Graphics::inicjalizeGraphicsGUI(void){
      ui->pushButton_23->setCheckable(true);
      ui->pushButton_24->setCheckable(true);
      ui->pushButton_25->setCheckable(true);
+     ui->pushButton_26->setCheckable(true);
+     ui->pushButton_27->setCheckable(true);
 
 
 
@@ -151,43 +157,101 @@ void Graphics::inicjalizeGraphicsGUI(void){
      parameters_tags.append("FACE");
      parameters_tags.append("KOSMO");
      parameters_tags.append("FOOD");
-
-
-
-    actualiceKosmoCombo();
-
+     parameters_tags.append("FOOD");
 
 
 
 
 
 
+      kosmo_list.clear();
+      readListFromIniFile(kosmo_list, "KosmoList");
+
+      ui->comboBox_15->clear();
+      ui->comboBox_15->addItems(kosmo_list);
+
+
+
+      createTabWidgets();
+      actualiceKosmo();
+
+
+      ui->radioButton->setChecked(true);
+      ui->radioButton_6->setChecked(true);
+      on_posilki_checked();
+      on_face_trend_value_change(1);
+
+
+}
+
+void Graphics::createTabWidgets(){
+
+    kosmo_table_model = new QStandardItemModel(0,1,this);
+    QStringList _model_items;
+     QStringList _model_items_2;
+     QStringList _model_items_3;
+    _model_items.append("KOSMO");
+    kosmo_table_model->setHorizontalHeaderLabels(_model_items);
+    ui->tableView->setModel(kosmo_table_model);
+    ui->tableView->horizontalHeader()->setSectionResizeMode( 0, QHeaderView::Stretch);
+
+     kosmo_wieczor_table_model = new QStandardItemModel(0,1,this);
+    _model_items_2.clear();
+     _model_items_2.append("KOSMO WIECZOR");
+    kosmo_wieczor_table_model->setHorizontalHeaderLabels(_model_items_2);
+     ui->tableView_2->setModel(kosmo_wieczor_table_model);
+     ui->tableView_2->horizontalHeader()->setSectionResizeMode( 0, QHeaderView::Stretch);
+
+    _model_items_3.clear();
+     _model_items_3.append("NAZWA");
+    _model_items_3.append("TYP");
+     food_table_model = new QStandardItemModel();
+     food_table_model->setHorizontalHeaderLabels( _model_items_3);
+     ui->tableView_3->setModel(food_table_model);
+     ui->tableView_3->horizontalHeader()->setSectionResizeMode( 0, QHeaderView::Stretch);
+
+
+}
+
+void Graphics::actualiceKosmo(){
+
+
+    kosmo_table_model->clear();
+    QStringList _model_items;
+    QStringList _model_items_2;
+    _model_items.append("KOSMO");
+    kosmo_table_model->setHorizontalHeaderLabels(_model_items);
+    ui->tableView->setModel(kosmo_table_model);
+    ui->tableView->horizontalHeader()->setSectionResizeMode( 0, QHeaderView::Stretch);
+
+  QList<QStandardItem *> newRow;
+    for(int i = 0; i < kosmo_list.size(); i++){
+        newRow.clear();
+        newRow.append(new QStandardItem(kosmo_list.at(i)));
+        kosmo_table_model->appendRow(newRow);
+    }
+
+    kosmo_wieczor_table_model->clear();
+    _model_items_2.append("KOSMO WIECZOR");
+    kosmo_wieczor_table_model->setHorizontalHeaderLabels(_model_items_2);
+    ui->tableView_2->setModel(kosmo_wieczor_table_model);
+    ui->tableView_2->horizontalHeader()->setSectionResizeMode( 0, QHeaderView::Stretch);
+
+    for(int i = 0; i < kosmo_list.size(); i++){
+        newRow.clear();
+        newRow.append(new QStandardItem(kosmo_list.at(i)));
+        kosmo_wieczor_table_model->appendRow(newRow);
+    }
+}
+
+
+
+void Graphics::addListToTable(QStandardItemModel &model,  QStringList  &list){
 
 
 
 }
 
-void Graphics::actualiceKosmoCombo(){
-
-    kosmo_list.clear();
-    readListFromIniFile(kosmo_list, "KosmoList");
-
-    ui->comboBox_9->clear();
-    ui->comboBox_10->clear();
-    ui->comboBox_11->clear();
-    ui->comboBox_12->clear();
-    ui->comboBox_13->clear();
-    ui->comboBox_14->clear();
-     ui->comboBox_15->clear();
-
-    ui->comboBox_9->addItems(kosmo_list);
-    ui->comboBox_10->addItems(kosmo_list);
-    ui->comboBox_11->addItems(kosmo_list);
-    ui->comboBox_12->addItems(kosmo_list);
-    ui->comboBox_13->addItems(kosmo_list);
-    ui->comboBox_14->addItems(kosmo_list);
-    ui->comboBox_15->addItems(kosmo_list);
-}
 
 
 
@@ -338,24 +402,39 @@ void Graphics::actualiceGraphicsGUI(Parameters_t param){
         ui->label_21->setText("zanikajace");
     }
 
-    ui->comboBox_9->setCurrentIndex(ui->comboBox_9->findText(parameters.kosmo.kosmo_1));
-    ui->comboBox_10->setCurrentIndex(ui->comboBox_10->findText(parameters.kosmo.kosmo_2));
-    ui->comboBox_11->setCurrentIndex(ui->comboBox_11->findText(parameters.kosmo.kosmo_3));
-    ui->comboBox_12->setCurrentIndex(ui->comboBox_12->findText(parameters.kosmo.kosmo_4));
-    ui->comboBox_13->setCurrentIndex(ui->comboBox_13->findText(parameters.kosmo.kosmo_5));
-    ui->comboBox_14->setCurrentIndex(ui->comboBox_14->findText(parameters.kosmo.kosmo_6));
+    QColor rowColor = Qt::red; //or some other color definition
 
+    for(int i = 0; i < parameters.kosmo.rano.size(); i++){
+        for(int j = 0; j < kosmo_list.size(); j++){
+            if(parameters.kosmo.rano.at(i).contains(kosmo_list.at(j))){
+                qDebug() << "zawieram " << kosmo_list.at(j) << "numer = "<<j;
+                ui->tableView->model()->setData(ui->tableView->model()->index(j, 0),rowColor, Qt::ForegroundRole );
+            }
+        }
+    }
+    for(int i = 0; i < parameters.kosmo.wieczor.size(); i++){
+        for(int j = 0; j < kosmo_list.size(); j++){
+            if(parameters.kosmo.wieczor.at(i).contains(kosmo_list.at(j))){
+                qDebug() << "zawieram " << kosmo_list.at(j) << "numer = "<<j;
+                ui->tableView_2->model()->setData(ui->tableView_2->model()->index(j, 0),rowColor, Qt::ForegroundRole );
+            }
+        }
+    }
 
-
-    //TODO:
-//   if(parameters.face_1.place.contains("")){
-//        ui->horizontalSlider_8->setValue(3);
-//        ui->label_21->setText("zanikajace");
-//    }
-
+    ui->comboBox->setCurrentText( parameters.face_1.place);
+    ui->comboBox_2->setCurrentText( parameters.face_1.what);
+    ui->comboBox_3->setCurrentText( parameters.face_2.place);
+    ui->comboBox_4->setCurrentText( parameters.face_2.what);
+    ui->comboBox_5->setCurrentText( parameters.face_3.place);
+    ui->comboBox_6->setCurrentText( parameters.face_3.what);
+    ui->comboBox_7->setCurrentText( parameters.face_4.place);
+    ui->comboBox_8->setCurrentText( parameters.face_4.what);
 
 
 }
+
+
+
 void Graphics::on_menu_wprowadz_wszystko_clicked(bool x){
     ui->stackedWidget->setCurrentIndex(WPROWADZ_WSZYSTKO_INDEX);
     control_tab(WPROWADZ_WSZYSTKO_INDEX);
@@ -492,10 +571,11 @@ void Graphics::getParameters(Parameters_t &param){
 
  void Graphics:: on_dodaj_kosmo_clicked(){
      kosmo_list.append(ui->textEdit->toPlainText());
-     qDebug() << ui->textEdit->toPlainText();
+     ui->textEdit->clear();
+
 
      writeListToIniFile(kosmo_list, "KosmoList");
-     actualiceKosmoCombo();
+     actualiceKosmo();
      actualice_list(14);
 
  }
@@ -504,7 +584,6 @@ void Graphics::getParameters(Parameters_t &param){
 
      actualice_list(14);
  }
-
 
 
 
@@ -527,7 +606,7 @@ void Graphics::getParameters(Parameters_t &param){
      settings.beginReadArray(list_name);
      for (int i = 0; i < size ; ++i) {
          settings.setArrayIndex(i);
-         kosmo_list.append(settings.value(list_name+"Item"+QString::number(i), "brak").toString());
+         list.append(settings.value(list_name+"Item"+QString::number(i), "brak").toString());
      }
      settings.endArray();
  }
@@ -537,78 +616,327 @@ void Graphics::getParameters(Parameters_t &param){
      readListFromIniFile(list, list_name);
      list.removeOne(item_name);
      writeListToIniFile(list, list_name);
-     actualiceKosmoCombo();
+     actualiceKosmo();
  }
 
 
- void Graphics::on_kosmo_1_change(QString text){
-    parameters.kosmo.kosmo_1 = text;
-    actualice_list(14);
- }
- void Graphics::on_kosmo_2_change(QString text){
-    parameters.kosmo.kosmo_2 = text;\
-    actualice_list(14);
- }
- void Graphics::on_kosmo_3_change(QString text){
-    parameters.kosmo.kosmo_3 = text;
-    actualice_list(14);
- }
- void Graphics::on_kosmo_4_change(QString text){
-    parameters.kosmo.kosmo_4 = text;
-    actualice_list(14);
- }
- void Graphics::on_kosmo_5_change(QString text){
-    parameters.kosmo.kosmo_5 = text;
-    actualice_list(14);
- }
- void Graphics::on_kosmo_6_change(QString text){
-    parameters.kosmo.kosmo_6 = text;
+ void Graphics::on_kosmo_rano_change(QString text){
+    parameters.kosmo.rano.append(text);
     actualice_list(14);
  }
 
 
  void Graphics::on_posilki_checked(){
+     actualice_list(15);
+     readListFromIniFile(posilki_list, "PosilkiLog");
+    fillFoodTable(food_table_model, posilki_list, false);
 
+    ui->comboBox_17->clear();
      ui->comboBox_17->addItems(posilki_list);
+
  }
  void Graphics::on_przekaski_checked(){
+     actualice_list(15);
+     readListFromIniFile(przekaski_list, "PrzekaskiLog");
+    fillFoodTable(food_table_model, przekaski_list, false);
+     ui->comboBox_17->clear();
     ui->comboBox_17->addItems(przekaski_list);
+
  }
 
  void Graphics::on_owoce_checked(){
+     actualice_list(15);
+     readListFromIniFile(owoce_list, "OwoceLog");
+    fillFoodTable(food_table_model, owoce_list, false);
+     ui->comboBox_17->clear();
     ui->comboBox_17->addItems(owoce_list);
+
  }
 
  void Graphics::on_warzywa_checked(){
+    actualice_list(15);
+    readListFromIniFile(warzywa_list, "WarzywaLog");
+    fillFoodTable(food_table_model, warzywa_list, false);
+     ui->comboBox_17->clear();
     ui->comboBox_17->addItems(warzywa_list);
+
  }
  void Graphics::on_inne_checked(){
+     actualice_list(15);
+     readListFromIniFile(inne_list, "InneLog");
+    fillFoodTable(food_table_model, inne_list, false);
+     ui->comboBox_17->clear();
     ui->comboBox_17->addItems(inne_list);
+
  }
 
+ void Graphics::on_set_rano_tab(){
+     actualice_list(14);
+     ui->stackedWidget_3->setCurrentIndex(0);
+     ui->pushButton_26->setChecked(true);
+     ui->pushButton_27->setChecked(false);
+
+ }
+ void Graphics::on_set_wieczor_tab(){
+     actualice_list(14);
+     ui->stackedWidget_3->setCurrentIndex(1);
+     ui->pushButton_27->setChecked(true);
+     ui->pushButton_26->setChecked(false);
+ }
+
+ void Graphics::fillFoodTable(QStandardItemModel *model, QStringList list, bool clear){
+      QStringList _model_items;
+       _model_items.append("NAZWA");
+       _model_items.append("TYP");
+       food_table_model = new QStandardItemModel();
+       food_table_model->setHorizontalHeaderLabels( _model_items);
+       fillTable(model, list, clear);
+}
+
+
+void Graphics::fillTable(QStandardItemModel *model, QStringList list, bool clear){
+
+
+    if(clear){
+        model->clear();
+    }
+
+    ui->tableView_3->setModel(model);
+    ui->tableView_3->horizontalHeader()->setSectionResizeMode( 0, QHeaderView::Stretch);
+
+    QList<QStandardItem *> newRow;
+    for(int i = 0; i < list.size(); i++){
+        newRow.clear();
+        newRow.append(new QStandardItem(list.at(i)));
+        model->appendRow(newRow);
+
+    }
+
+}
+
+void Graphics::on_sniadanie_checked(){
+    actualice_list(15);
+}
+
+void Graphics::on_obiad_checked(){
+    actualice_list(15);
+}
+
+void Graphics::on_kolacja_checked(){
+    actualice_list(15);
+}
+
+void Graphics::on_inne_posilki_checked(){
+    actualice_list(15);
+}
+
+
  void Graphics::on_dodaj_food_clicked(){
+     actualice_list(15);
      if(ui->radioButton->isChecked()){
+         qDebug() << "PosilkiLog";
          posilki_list.append(ui->textEdit_4->toPlainText());
-        // writeListToIniFile(posilki_list, "PosilkiLog");
+         qDebug() << "ui->textEdit_4->toPlainText() = " << ui->textEdit_4->toPlainText();
+         writeListToIniFile(posilki_list, "PosilkiLog");
+         readListFromIniFile(posilki_list, "PosilkiLog");
+         fillFoodTable(food_table_model, posilki_list, false);
+
+         ui->comboBox_17->clear();
+         ui->comboBox_17->addItems( posilki_list);
+
+
      }else if(ui->radioButton_2->isChecked()){
+         qDebug() << "PrzekaskiLog";
          przekaski_list.append(ui->textEdit_4->toPlainText());
-        // writeListToIniFile(przekaski_list, "PrzekaskiLog");
+         writeListToIniFile(przekaski_list, "PrzekaskiLog");
+         readListFromIniFile(przekaski_list, "PrzekaskiLog");
+         fillFoodTable(food_table_model, przekaski_list, false);
+         ui->comboBox_17->clear();
+         ui->comboBox_17->addItems( przekaski_list);
+
      }else if(ui->radioButton_3->isChecked()){
+          qDebug() << "OwoceLog";
          owoce_list.append(ui->textEdit_4->toPlainText());
-       //  writeListToIniFile(owoce_list, "OwoceLog");
+         writeListToIniFile(owoce_list, "OwoceLog");
+         readListFromIniFile(owoce_list, "OwoceLog");
+         fillFoodTable(food_table_model, owoce_list, false);
+         ui->comboBox_17->clear();
+         ui->comboBox_17->addItems( owoce_list);
+
      }else if(ui->radioButton_4->isChecked()){
+           qDebug() << "WarzywaLog";
          warzywa_list.append(ui->textEdit_4->toPlainText());
-         //writeListToIniFile(warzywa_list, "WarzywaLog");
+         writeListToIniFile(warzywa_list, "WarzywaLog");
+         readListFromIniFile(warzywa_list, "WarzywaLog");
+         fillFoodTable(food_table_model, warzywa_list, false);
+         ui->comboBox_17->clear();
+         ui->comboBox_17->addItems( warzywa_list);
+
      }else if(ui->radioButton_5->isChecked()){
+           qDebug() << "InneLog";
          inne_list.append(ui->textEdit_4->toPlainText());
-         //writeListToIniFile(inne_list, "InneLog");
+        writeListToIniFile(inne_list, "InneLog");
+        readListFromIniFile(inne_list, "InneLog");
+        fillFoodTable(food_table_model, inne_list, false);
+        ui->comboBox_17->clear();
+        ui->comboBox_17->addItems( inne_list);
      }
+
+     ui->textEdit_4->clear();
+
  }
 
 
  void Graphics::on_usun_food_clicked(){
+     actualice_list(15);
+
+    qDebug() << "On usun food clicked";
+    if(ui->radioButton->isChecked()){
+        removeItemFromList(posilki_list, "PosilkiLog", ui->comboBox_17->currentText());
+        readListFromIniFile(posilki_list, "PosilkiLog");
+        fillFoodTable(food_table_model, posilki_list, false);
+        ui->comboBox_17->clear();
+        ui->comboBox_17->addItems( posilki_list);
+
+    }else if(ui->radioButton_2->isChecked()){
+        removeItemFromList(przekaski_list, "PrzekaskiLog", ui->comboBox_17->currentText());
+        readListFromIniFile(przekaski_list, "PrzekaskiLog");
+        fillFoodTable(food_table_model, przekaski_list, false);
+        ui->comboBox_17->clear();
+        ui->comboBox_17->addItems( przekaski_list);
+
+    }else if(ui->radioButton_3->isChecked()){
+        removeItemFromList(owoce_list, "OwoceLog", ui->comboBox_17->currentText());
+        readListFromIniFile(owoce_list, "OwoceLog");
+        fillFoodTable(food_table_model, owoce_list, false);
+        ui->comboBox_17->clear();
+        ui->comboBox_17->addItems( owoce_list);
+
+    }else if(ui->radioButton_4->isChecked()){
+        removeItemFromList(warzywa_list, "WarzywaLog", ui->comboBox_17->currentText());
+        readListFromIniFile(warzywa_list, "WarzywaLog");
+        fillFoodTable(food_table_model, warzywa_list, false);
+        ui->comboBox_17->clear();
+        ui->comboBox_17->addItems( warzywa_list);
+
+    }else if(ui->radioButton_5->isChecked()){
+       removeItemFromList(inne_list, "InneLog", ui->comboBox_17->currentText());
+       readListFromIniFile(inne_list, "InneLog");
+       fillFoodTable(food_table_model, inne_list, false);
+       ui->comboBox_17->clear();
+       ui->comboBox_17->addItems( inne_list);
+    }
+ }
+
+
+ void Graphics::on_tableView_rano_customContextMenuRequested(const QPoint &pos)
+ {
+     qDebug() << ui->tableView->viewport()->mapToGlobal(pos);
+ }
+
+void Graphics::on_tableView_wieczor_customContextMenuRequested(const QPoint &pos){
+     qDebug() << ui->tableView_2->viewport()->mapToGlobal(pos);
+}
+
+
+
+
+ void Graphics::on_tableView_clicked(QModelIndex index)
+ {
+     QModelIndexList selection = ui->tableView->selectionModel()->selectedRows();
+     if(selection.count() > 0){
+         QModelIndex index = selection.at(0);
+      }
+     QMessageBox msgBox;
+     msgBox.setText("Czy Dodac "+kosmo_list.at(index.row())+" ?");
+     msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Cancel);
+     msgBox.setDefaultButton(QMessageBox::Save);
+     int ret = msgBox.exec();
+     if(ret == QMessageBox::Save){
+        parameters.kosmo.rano.append(kosmo_list.at(index.row()));
+         QColor rowColor = Qt::red;
+         ui->tableView->model()->setData(ui->tableView->model()->index(index.row(), 0),rowColor, Qt::ForegroundRole );
+     }
+
 
  }
+
+ void Graphics::on_tableView_2_clicked(QModelIndex index){
+
+     QModelIndexList selection = ui->tableView_2->selectionModel()->selectedRows();
+     if(selection.count() > 0){
+         QModelIndex index = selection.at(0);
+     }
+         QMessageBox msgBox;
+         msgBox.setText("Czy Dodac \""+kosmo_list.at(index.row())+"\" ?");
+         msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Cancel);
+         msgBox.setDefaultButton(QMessageBox::Save);
+         int ret = msgBox.exec();
+         QColor rowColor = Qt::red;
+         if(ret == QMessageBox::Save){
+             parameters.kosmo.wieczor.append(kosmo_list.at(index.row()));
+             QColor rowColor = Qt::red;
+             ui->tableView_2->model()->setData(ui->tableView_2->model()->index(index.row(), 0),rowColor, Qt::ForegroundRole );
+         }
+ }
+
+
+ QStringList Graphics::getActualFoodList(){
+     if(ui->radioButton->isChecked()){
+         return posilki_list;
+     }
+     else if(ui->radioButton_2->isChecked()){
+         return przekaski_list;
+     }
+     else if(ui->radioButton_3->isChecked()){
+         return owoce_list;
+     }
+     else if(ui->radioButton_4->isChecked()){
+         return warzywa_list;
+     }
+     else if(ui->radioButton_5->isChecked()){
+         return inne_list;
+     }
+ }
+
+ void Graphics::on_tableView_3_clicked(QModelIndex index){
+
+     actualice_list(15);
+     QColor rowColor = Qt::red;
+     QMessageBox::StandardButton reply;
+     reply = QMessageBox::question(this, "Dodac", "Czy Dodac \""+getActualFoodList().at(index.row())+"\" ?",
+                                   QMessageBox::Yes|QMessageBox::No);
+     if (reply == QMessageBox::Yes) {
+         if(ui->radioButton_6->isChecked() ){
+             parameters.food.sniadanie.append(getActualFoodList().at(index.row()));
+             ui->tableView_3->model()->setData(ui->tableView_3->model()->index(index.row(), 0),rowColor, Qt::ForegroundRole );
+             qDebug() << parameters.food.sniadanie;
+         }
+         if(ui->radioButton_7->isChecked() ){
+             parameters.food.obiad.append(getActualFoodList().at(index.row()));
+             ui->tableView_3->model()->setData(ui->tableView_3->model()->index(index.row(), 0),rowColor, Qt::ForegroundRole );
+             qDebug() << parameters.food.obiad;
+         }
+         if(ui->radioButton_8->isChecked() ){
+             parameters.food.kolacja.append(getActualFoodList().at(index.row()));
+             ui->tableView_3->model()->setData(ui->tableView_3->model()->index(index.row(), 0),rowColor, Qt::ForegroundRole );
+             qDebug() << parameters.food.kolacja;
+         }
+         if(ui->radioButton_9->isChecked() ){
+             parameters.food.inne.append(getActualFoodList().at(index.row()));
+             ui->tableView_3->model()->setData(ui->tableView_3->model()->index(index.row(), 0),rowColor, Qt::ForegroundRole );
+             qDebug() << parameters.food.inne;
+         }
+     }
+ }
+
+
+
+
+
+
+
+
 
 
 
