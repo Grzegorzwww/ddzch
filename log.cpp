@@ -13,33 +13,33 @@ Log::Log( int x, QObject *parent) : QObject(parent),  xlsx(LOG_NAME)
 void Log::initLog() {
 
     xlsx.write("A1", "Data");
-    xlsx.write("B1", "Period");
-    xlsx.write("C1", "HeadAche");
-    xlsx.write("D1", "Stomachache");
-    xlsx.write("E1", "STOOO");
-    xlsx.write("F1", "ALCO");
-    xlsx.write("G1", "water");
-    xlsx.write("H1", "sleep");
-    xlsx.write("I1", "exx");
-    xlsx.write("J1", "scare");
-    xlsx.write("K1", "pills");
-    xlsx.write("L1", "chip");
-    xlsx.write("M1", "sweet");
+    xlsx.write("B1", "Okres");
+    xlsx.write("C1", "Ból Głowy");
+    xlsx.write("D1", "Ból Brzucha");
+    xlsx.write("E1", "Kupka");
+    xlsx.write("F1", "Alkochol");
+    xlsx.write("G1", "Woda");
+    xlsx.write("H1", "Sen");
+    xlsx.write("I1", "Exs");
+    xlsx.write("J1", "Nerwy");
+    xlsx.write("K1", "Euthyrox");
+    xlsx.write("L1", "Czipsy");
+    xlsx.write("M1", "Słodyczne");
      xlsx.write("N1", "Twarz 1");
      xlsx.write("O1", "Twarz 2");
      xlsx.write("P1", "Twarz 3");
      xlsx.write("Q1", "Twarz 4");
      xlsx.write("R1", "TREND TWARZY");
 
-     xlsx.write("S1", "kosmetyki rano");
+     xlsx.write("S1", "Kosmetyki rano");
 
-     xlsx.write("T1", "kosmetyki wieczorem");
+     xlsx.write("T1", "Kosmetyki wieczorem");
 
       xlsx.write("U1", "SNIADANIE");
       xlsx.write("V1", "OBIAD");
       xlsx.write("W1", "KOLACJA");
       xlsx.write("X1", "INNE");
-
+      xlsx.write("Y1", "NOTATKI: ");
 
     xlsx.save();
     qDebug() << "Jestem w initLog()";
@@ -204,6 +204,13 @@ bool Log::saveLog(Parameters_t param, int last_record) {
     xlsx.write("X"+QString::number(last_record), temp);
 
 
+    xlsx.write("Y"+QString::number(last_record), param.notice.str_param);
+
+
+
+
+
+
 
     xlsx.save();
     return true;
@@ -214,7 +221,6 @@ bool Log::saveLog(Parameters_t param, int last_record) {
 bool Log::readLog(Parameters_t &param, int last_record){
 
     QString read_str;
-
 //   param.read_date_time =  QDateTime(QDateTime::fromString(xlsx.read("A"+QString::number(last_record)).toString()/*"dd.MM.yyyy HH:mm"*/));
     read_str = xlsx.read("A"+QString::number(last_record)).toString();
     if(!read_str.isEmpty()){
@@ -373,6 +379,11 @@ bool Log::readLog(Parameters_t &param, int last_record){
       param.food.inne = read_str.split(" -  ");
       for(int i = 0; i < param.food.inne.size(); i++ )
             param.food.inne[i].replace("-","");
+
+
+      read_str = xlsx.read("Y"+QString::number(last_record)).toString();
+      param.notice.str_param = read_str;
+
 
 
 

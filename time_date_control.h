@@ -17,7 +17,7 @@ public:
 
 
     void load_app_settings();
-    bool check_first_turn_on();
+    bool check_first_turn_on(int *days_diff);
 
 
 

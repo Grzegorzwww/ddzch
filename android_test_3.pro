@@ -28,13 +28,15 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     graphics.cpp \
     time_date_control.cpp \
-    log.cpp
+    log.cpp \
+    mylineedit.cpp
 
 HEADERS  += mainwindow.h \
     defines.h \
     graphics.h \
     time_date_control.h \
-    log.h
+    log.h \
+    mylineedit.h
 
 #/home/gwarchol/qt_workspace/android_app/android_test_3/xlsx/QtXlsxWriter-master/src/xlsx
 #include(/home/gwarchol/qt_workspace/android_app/xlsx/QtXlsxWriter-master/src/xlsx/qtxlsx.pri)

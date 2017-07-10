@@ -83,6 +83,9 @@ Graphics::Graphics(Ui::MainWindow *_ui, QWidget *parent) : QWidget(parent),ui(_u
     connect(ui->pushButton_27, SIGNAL(clicked()), this, SLOT(on_set_wieczor_tab()));
 
 
+    connect(ui->textEdit_2, SIGNAL(textChanged()),this, SLOT(on_notice_changed()));
+
+
     connect(ui->groupBox, SIGNAL(clicked()), this, SLOT(on_slot()));
 
 
@@ -142,22 +145,23 @@ void Graphics::inicjalizeGraphicsGUI(void){
      ui->comboBox_8->addItems(face_state_init_text);
 
      parameters_tags.append("-");
-     parameters_tags.append("PERIOD");
-     parameters_tags.append("GLOWA");
-     parameters_tags.append("BRZUCH");
-     parameters_tags.append("STOO");
-     parameters_tags.append("ALCO");
-     parameters_tags.append("WATER");
-     parameters_tags.append("SPEEP");
-     parameters_tags.append("EXX");
-     parameters_tags.append("SCAREE");
-     parameters_tags.append("PILLS");
-     parameters_tags.append("CHIPS");
-     parameters_tags.append("SWEET");
-     parameters_tags.append("FACE");
-     parameters_tags.append("KOSMO");
-     parameters_tags.append("FOOD");
-     parameters_tags.append("FOOD");
+     parameters_tags.append("OKRES");
+     parameters_tags.append("BOL GŁOWY");
+     parameters_tags.append("BOL BRZUCHA");
+     parameters_tags.append("KUPKA");
+     parameters_tags.append("ALKOCHOL");
+     parameters_tags.append("WYPITA WODA");
+     parameters_tags.append("SEN ");
+     parameters_tags.append("EXS");
+     parameters_tags.append("NERWY");
+     parameters_tags.append("EUTHYROX ");
+     parameters_tags.append("CHIPSY");
+     parameters_tags.append("SŁODYCZE");
+     parameters_tags.append("STAN BUZI");
+     parameters_tags.append("LUŹNE NOTATKI");
+     parameters_tags.append("UŻYTE KOSMEYKI");
+     parameters_tags.append("JEDZENIE");
+     parameters_tags.append("JEDZENIE");
 
 
 
@@ -165,6 +169,7 @@ void Graphics::inicjalizeGraphicsGUI(void){
 
 
       kosmo_list.clear();
+      actualice_list(0);
       readListFromIniFile(kosmo_list, "KosmoList");
 
       ui->comboBox_15->clear();
@@ -232,7 +237,7 @@ void Graphics::actualiceKosmo(){
     }
 
     kosmo_wieczor_table_model->clear();
-    _model_items_2.append("KOSMO WIECZOR");
+    _model_items_2.append("KOSMETYKI WIECZOR");
     kosmo_wieczor_table_model->setHorizontalHeaderLabels(_model_items_2);
     ui->tableView_2->setModel(kosmo_wieczor_table_model);
     ui->tableView_2->horizontalHeader()->setSectionResizeMode( 0, QHeaderView::Stretch);
@@ -431,6 +436,9 @@ void Graphics::actualiceGraphicsGUI(Parameters_t param){
     ui->comboBox_8->setCurrentText( parameters.face_4.what);
 
 
+    ui->textEdit_2->setText(parameters.notice.str_param);
+
+
 }
 
 
@@ -576,13 +584,13 @@ void Graphics::getParameters(Parameters_t &param){
 
      writeListToIniFile(kosmo_list, "KosmoList");
      actualiceKosmo();
-     actualice_list(14);
+     actualice_list(15);
 
  }
  void Graphics::on_usun_kosmo_clicked(){
      removeItemFromList(kosmo_list, "KosmoList", ui->comboBox_15->currentText());
 
-     actualice_list(14);
+     actualice_list(15);
  }
 
 
@@ -622,7 +630,7 @@ void Graphics::getParameters(Parameters_t &param){
 
  void Graphics::on_kosmo_rano_change(QString text){
     parameters.kosmo.rano.append(text);
-    actualice_list(14);
+    actualice_list(15);
  }
 
 
@@ -671,14 +679,14 @@ void Graphics::getParameters(Parameters_t &param){
  }
 
  void Graphics::on_set_rano_tab(){
-     actualice_list(14);
+     actualice_list(15);
      ui->stackedWidget_3->setCurrentIndex(0);
      ui->pushButton_26->setChecked(true);
      ui->pushButton_27->setChecked(false);
 
  }
  void Graphics::on_set_wieczor_tab(){
-     actualice_list(14);
+     actualice_list(15);
      ui->stackedWidget_3->setCurrentIndex(1);
      ui->pushButton_27->setChecked(true);
      ui->pushButton_26->setChecked(false);
@@ -715,24 +723,24 @@ void Graphics::fillTable(QStandardItemModel *model, QStringList list, bool clear
 }
 
 void Graphics::on_sniadanie_checked(){
-    actualice_list(15);
+    actualice_list(16);
 }
 
 void Graphics::on_obiad_checked(){
-    actualice_list(15);
+    actualice_list(16);
 }
 
 void Graphics::on_kolacja_checked(){
-    actualice_list(15);
+    actualice_list(16);
 }
 
 void Graphics::on_inne_posilki_checked(){
-    actualice_list(15);
+    actualice_list(16);
 }
 
 
  void Graphics::on_dodaj_food_clicked(){
-     actualice_list(15);
+     actualice_list(16);
      if(ui->radioButton->isChecked()){
          qDebug() << "PosilkiLog";
          posilki_list.append(ui->textEdit_4->toPlainText());
@@ -788,7 +796,7 @@ void Graphics::on_inne_posilki_checked(){
 
 
  void Graphics::on_usun_food_clicked(){
-     actualice_list(15);
+     actualice_list(16);
 
     qDebug() << "On usun food clicked";
     if(ui->radioButton->isChecked()){
@@ -901,7 +909,7 @@ void Graphics::on_tableView_wieczor_customContextMenuRequested(const QPoint &pos
 
  void Graphics::on_tableView_3_clicked(QModelIndex index){
 
-     actualice_list(15);
+     actualice_list(16);
      QColor rowColor = Qt::red;
      QMessageBox::StandardButton reply;
      reply = QMessageBox::question(this, "Dodac", "Czy Dodac \""+getActualFoodList().at(index.row())+"\" ?",
@@ -930,8 +938,14 @@ void Graphics::on_tableView_wieczor_customContextMenuRequested(const QPoint &pos
      }
  }
 
+void  Graphics::on_notice_changed(){
+
+        actualice_list(14);
+        qDebug() << ui->textEdit_2->toPlainText();
+        parameters.notice.str_param = ui->textEdit_2->toPlainText();
 
 
+}
 
 
 

@@ -43,7 +43,7 @@ int TimeDateControl::getLastRecord() const {
 
  }
 
- bool TimeDateControl::check_first_turn_on(){
+ bool TimeDateControl::check_first_turn_on(int *days_diif){
 
 
      qDebug() << "prevdatetime->date() - "<<prevdatetime->date().toString();
@@ -53,6 +53,8 @@ int TimeDateControl::getLastRecord() const {
 
         if( prevdatetime->date() < actualdatetime->date()){
 
+            qDebug()<<  prevdatetime->date().toJulianDay() - actualdatetime->date().toJulianDay();
+//            qDebug << days_diif;
 
             qDebug() << "check_first_turn_on()";
             QSettings settings;

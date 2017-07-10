@@ -18,14 +18,12 @@ MainWindow::MainWindow(QWidget *parent) :
     time_date_control->load_app_settings();
     log = new Log( time_date_control->getLastRecord());
 
-
-    if(time_date_control->check_first_turn_on()){
+    int diff;
+    if(time_date_control->check_first_turn_on(&diff)){
         qDebug() << "pierwsze wlaczenie";
-       //ui->label_24->setText( "OK"   );
        ;
     }
     else{
-       // ui->label_24->setText( "FALSE"   );
         qDebug() << "kolejne wlaczenie";
         log->readLog(Param,time_date_control->getLastRecord());
         graphics->actualiceGraphicsGUI(Param);
@@ -36,6 +34,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
     connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(on_save_and_close_app()));
+    connect(ui->pushButton_2, SIGNAL(clicked()), this, SLOT(on_cancel_and_close_app()));
 }
 
 MainWindow::~MainWindow()
@@ -84,10 +83,7 @@ void MainWindow::setDarkTheme(void){
 
 void MainWindow::on_save_and_close_app(){
      graphics->getParameters(Param);
-
-
     if(log->saveLog(Param,  time_date_control->getLastRecord())){
-
         if(ui->stackedWidget->currentIndex() == WPROWADZ_FOOD_INDEX ){
             ui->stackedWidget->setCurrentIndex(LAST_INFO_INDEX);
             QTimer::singleShot(1500, this, SLOT(close()));
@@ -95,5 +91,12 @@ void MainWindow::on_save_and_close_app(){
         else
             this->close();
     }
-
 }
+
+void MainWindow::on_cancel_and_close_app(){
+    ui->stackedWidget->setCurrentIndex(LAST_INFO_INDEX);
+    QTimer::singleShot(1500, this, SLOT(close()));
+}
+
+
+

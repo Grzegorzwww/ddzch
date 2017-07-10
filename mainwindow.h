@@ -44,6 +44,7 @@ private slots:
 
 
      void on_save_and_close_app();
+     void on_cancel_and_close_app();
 
 };
 

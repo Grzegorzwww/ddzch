@@ -154,6 +154,7 @@ public slots:
     void on_obiad_checked();
     void on_kolacja_checked();
     void on_inne_posilki_checked();
+    void on_notice_changed();
 
 
 

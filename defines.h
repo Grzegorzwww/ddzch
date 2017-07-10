@@ -138,6 +138,7 @@ typedef struct Parameters_s {
     yesno_token_t sweet;
     used_kosmo_token_t kosmo;
     food_token_t food;
+    value_str_token_t notice;
 
     QDateTime read_date_time;
 
