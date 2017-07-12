@@ -86,6 +86,7 @@ void MainWindow::on_save_and_close_app(){
     if(log->saveLog(Param,  time_date_control->getLastRecord())){
         if(ui->stackedWidget->currentIndex() == WPROWADZ_FOOD_INDEX ){
             ui->stackedWidget->setCurrentIndex(LAST_INFO_INDEX);
+            vibrator.vibrate(300);
             QTimer::singleShot(1500, this, SLOT(close()));
         }
         else

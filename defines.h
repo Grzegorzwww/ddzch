@@ -119,7 +119,7 @@ typedef struct food_token_s {
 
 typedef struct Parameters_s {
     yesno_token_t period;
-    value_token_t periodache;
+    double_value_token_t periodache;
     yesno_value_token_t headache;
     yesno_value_token_t stomachache;
     double_value_token_t sto;

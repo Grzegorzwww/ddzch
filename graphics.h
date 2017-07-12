@@ -4,11 +4,13 @@
 #include "ui_mainwindow.h"
 #include <QWidget>
 #include <QDebug>
+#include <QDir>
 #include <QList>
 #include <QSettings>
 #include <QStandardItem>
 #include "defines.h"
  #include <QMessageBox>
+#include "vibrator.h"
 
 
 class Graphics : public QWidget
@@ -41,10 +43,17 @@ private:
     QStringList warzywa_list;
     QStringList inne_list;
 
+    QAbstractButton *zapiszButton;
+    QAbstractButton *anulujButton;
+    QAbstractButton *usunButton;
+
+
     QStandardItemModel *kosmo_table_model;
     QStandardItemModel *kosmo_wieczor_table_model;
 
      QStandardItemModel *food_table_model;
+
+      QMessageBox msgBox;
 
 
 
@@ -73,6 +82,7 @@ private:
 
 signals:
 
+
 public slots:
 
 
@@ -87,7 +97,11 @@ public slots:
 
     void on_period_yes_clicked() {parameters.period.state = true; ui->pushButton_9->setChecked(false); actualice_list(1);}
     void on_period_no_clicked() {parameters.period.state = false; ui->pushButton_8->setChecked(false); actualice_list(1);}
-    void on_period_value_change(int val) {parameters.periodache.value = val; ui->label_7->setText(QString::number(val)); actualice_list(1);}
+    void on_period_value_change(int val) {parameters.periodache.value_1 = val; ui->label_7->setText(QString::number(val)); actualice_list(1);}
+    void on_period_value_pain_change(int val) {parameters.periodache.value_2 = val; ui->label_23->setText(QString::number(val)); actualice_list(1);}
+
+
+
     void on_headache_yes_clicked() {parameters.headache.state = true; ui->pushButton_11->setChecked(false);  actualice_list(2);}
     void on_headache_no_clicked() {parameters.headache.state = false; ui->pushButton_10->setChecked(false);  actualice_list(2);}
     void on_headache_value_change(int val) {parameters.headache.value = val; ui->label_8->setText(QString::number(val)); actualice_list(2);}
@@ -133,7 +147,6 @@ public slots:
     void on_usun_kosmo_clicked();
 
     void on_dodaj_food_clicked();
-    void on_usun_food_clicked();
 
     void on_set_rano_tab();
     void on_set_wieczor_tab();

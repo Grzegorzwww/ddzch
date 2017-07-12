@@ -6,6 +6,9 @@
 
 QT       += core gui
 
+android: QT += androidextras
+
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = android_test_3
@@ -24,19 +27,23 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 
+
+
 SOURCES += main.cpp\
         mainwindow.cpp \
     graphics.cpp \
     time_date_control.cpp \
     log.cpp \
-    mylineedit.cpp
+    mylineedit.cpp \
+    vibrator.cpp
 
 HEADERS  += mainwindow.h \
     defines.h \
     graphics.h \
     time_date_control.h \
     log.h \
-    mylineedit.h
+    mylineedit.h \
+    vibrator.h
 
 #/home/gwarchol/qt_workspace/android_app/android_test_3/xlsx/QtXlsxWriter-master/src/xlsx
 #include(/home/gwarchol/qt_workspace/android_app/xlsx/QtXlsxWriter-master/src/xlsx/qtxlsx.pri)

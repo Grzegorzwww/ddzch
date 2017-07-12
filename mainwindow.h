@@ -12,6 +12,7 @@
 #include <QTimer>
 #include "time_date_control.h"
 #include "log.h"
+#include "vibrator.h"
 
 
 namespace Ui {
@@ -30,6 +31,9 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+    Vibrator vibrator;
+
 
      Graphics *graphics;
      TimeDateControl *time_date_control;
