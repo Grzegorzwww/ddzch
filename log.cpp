@@ -1,11 +1,23 @@
 #include "log.h"
 
-Log::Log( int x, QObject *parent) : QObject(parent),  xlsx(LOG_NAME)
+Log::Log( int x, QString path = LOG_NAME, QObject *parent) : QObject(parent), xlsx(path)
 {
+
+
+
+
+
+
 
     if(x == 1){
         initLog();
     }
+
+
+
+    // xlsx(LOG_NAME)
+     //= QXlsx::Document(xlsx_write_file_name);
+   // QDir::setPath(mediaDir.toString());
 
 
 }
@@ -39,6 +51,11 @@ void Log::initLog() {
     xlsx.write("Y1", "NOTATKI: ");
 
     xlsx.save();
+   // xlsx.saveAs( xlsx_write_file_name);
+
+
+
+
     qDebug() << "Jestem w initLog()";
 
 }
@@ -212,6 +229,7 @@ bool Log::saveLog(Parameters_t param, int last_record) {
 
 
     xlsx.save();
+     //xlsx.saveAs( xlsx_write_file_name);
     return true;
 
 }
@@ -220,6 +238,7 @@ bool Log::saveLog(Parameters_t param, int last_record) {
 bool Log::readLog(Parameters_t &param, int last_record){
 
     QString read_str;
+
     //   param.read_date_time =  QDateTime(QDateTime::fromString(xlsx.read("A"+QString::number(last_record)).toString()/*"dd.MM.yyyy HH:mm"*/));
     read_str = xlsx.read("A"+QString::number(last_record)).toString();
     if(!read_str.isEmpty()){

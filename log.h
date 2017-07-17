@@ -6,6 +6,10 @@
 #include <defines.h>
 #include <QDebug>
 #include "xlsxdocument.h"
+#include <QAndroidJniEnvironment>
+#include <QAndroidJniObject>
+#include <QDir>
+
 
 
 static const QString LOG_NAME = "zapisane_dane.xlsx";
@@ -14,7 +18,7 @@ class Log : public QObject
 {
     Q_OBJECT
 public:
-    explicit Log(int x, QObject *parent = 0);
+    explicit Log(int x, QString path, QObject *parent = 0);
     bool saveLog(Parameters_t param, int last_record);
     bool readLog(Parameters_t &param, int last_record);
 
@@ -23,6 +27,8 @@ private:
     int last_record;
 
     void initLog();
+
+
 
 
 

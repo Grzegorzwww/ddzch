@@ -10,13 +10,20 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    QAndroidJniObject mediaDir = QAndroidJniObject::callStaticObjectMethod("android/os/Environment", "getExternalStorageDirectory", "()Ljava/io/File;");
+    QAndroidJniObject mediaPath = mediaDir.callObjectMethod( "getAbsolutePath", "()Ljava/lang/String;" );
+   QAndroidJniObject activity = QAndroidJniObject::callStaticObjectMethod("org/qtproject/qt5/android/QtNative", "activity", "()Landroid/app/Activity;");
+   QAndroidJniObject package = activity.callObjectMethod("getPackageName", "()Ljava/lang/String;");
+   QDir::setCurrent(mediaDir.toString());
+    QString  xlsx_write_file_name = LOG_NAME;
+
 
     graphics = new Graphics(ui,this);
     setDarkTheme();
 
     time_date_control = new TimeDateControl();
     time_date_control->load_app_settings();
-    log = new Log( time_date_control->getLastRecord());
+    log = new Log( time_date_control->getLastRecord(), xlsx_write_file_name );
 
     int diff;
     if(time_date_control->check_first_turn_on(&diff)){
@@ -29,10 +36,6 @@ MainWindow::MainWindow(QWidget *parent) :
         graphics->actualiceGraphicsGUI(Param);
     }
 
-
-
-
-
     connect(ui->pushButton, SIGNAL(clicked()), this, SLOT(on_save_and_close_app()));
     connect(ui->pushButton_2, SIGNAL(clicked()), this, SLOT(on_cancel_and_close_app()));
 }
@@ -41,7 +44,6 @@ MainWindow::~MainWindow()
 {
     delete ui;
     delete graphics;
-
 
 }
 

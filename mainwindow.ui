@@ -125,31 +125,10 @@
        </font>
       </property>
       <property name="currentIndex">
-       <number>6</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="page">
        <layout class="QGridLayout" name="gridLayout_2">
-        <item row="1" column="0">
-         <widget class="QPushButton" name="pushButton_4">
-          <property name="enabled">
-           <bool>false</bool>
-          </property>
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="font">
-           <font>
-            <pointsize>16</pointsize>
-           </font>
-          </property>
-          <property name="text">
-           <string>PRZYPOMNIJ O WODZIE</string>
-          </property>
-         </widget>
-        </item>
         <item row="0" column="0">
          <widget class="QPushButton" name="pushButton_3">
           <property name="sizePolicy">
@@ -160,11 +139,11 @@
           </property>
           <property name="font">
            <font>
-            <pointsize>16</pointsize>
+            <pointsize>22</pointsize>
            </font>
           </property>
           <property name="text">
-           <string>WPROWADZ WSZYSTKO</string>
+           <string>WPROWADZ INFORMACJE</string>
           </property>
          </widget>
         </item>
@@ -250,7 +229,7 @@
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
-                 <height>40</height>
+                 <height>50</height>
                 </size>
                </property>
                <property name="font">
@@ -301,7 +280,7 @@
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
-                 <height>40</height>
+                 <height>50</height>
                 </size>
                </property>
                <property name="font">
@@ -409,7 +388,7 @@
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
-                 <height>40</height>
+                 <height>50</height>
                 </size>
                </property>
                <property name="minimum">
@@ -506,7 +485,7 @@
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
-                 <height>40</height>
+                 <height>50</height>
                 </size>
                </property>
                <property name="minimum">
@@ -612,7 +591,7 @@
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
-                 <height>40</height>
+                 <height>50</height>
                 </size>
                </property>
                <property name="minimum">
@@ -658,7 +637,7 @@
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
-                 <height>40</height>
+                 <height>50</height>
                 </size>
                </property>
                <property name="minimum">
@@ -796,20 +775,23 @@
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
-                 <height>40</height>
+                 <height>50</height>
                 </size>
                </property>
                <property name="maximum">
-                <number>2000</number>
+                <number>200</number>
                </property>
                <property name="singleStep">
-                <number>10</number>
+                <number>1</number>
                </property>
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
                <property name="tickPosition">
                 <enum>QSlider::TicksAbove</enum>
+               </property>
+               <property name="tickInterval">
+                <number>10</number>
                </property>
               </widget>
              </item>
@@ -1014,7 +996,7 @@
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
-                 <height>40</height>
+                 <height>50</height>
                 </size>
                </property>
                <property name="minimum">
@@ -1466,7 +1448,7 @@
                <property name="maximumSize">
                 <size>
                  <width>16777215</width>
-                 <height>60</height>
+                 <height>70</height>
                 </size>
                </property>
                <property name="minimum">

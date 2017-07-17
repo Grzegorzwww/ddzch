@@ -2,6 +2,7 @@
 #define GRAPHICS_H
 
 #include "ui_mainwindow.h"
+#include <QStandardPaths>
 #include <QWidget>
 #include <QDebug>
 #include <QDir>
@@ -112,7 +113,7 @@ public slots:
     void on_stoo_value_2_change(int val) {parameters.sto.value_2 = val; ui->label_13->setText(QString::number(val));actualice_list(4);}
     void on_alco_yes_clicked() {parameters.alco.state = true;  ui->pushButton_15->setChecked(false);  actualice_list(5);}
     void on_alco_no_clicked() {parameters.alco.state= false;ui->pushButton_14->setChecked(false); actualice_list(5);}
-    void on_water_value_change(int val) {parameters.water.value = val; ui->label_15->setText(QString::number(val)+" ml");actualice_list(6);}
+    void on_water_value_change(int val) {parameters.water.value = (val * 10); ui->label_15->setText(QString::number(val * 10)+" ml");actualice_list(6);}
     void on_nes_yes_clicked() {parameters.sleep.state = true; ui->pushButton_17->setChecked(false); actualice_list(7);}
     void on_nes_no_clicked() {parameters.sleep.state = false; ui->pushButton_16->setChecked(false); actualice_list(7);}
     void on_exx_yes_clicked() {parameters.exx.state = true;ui->pushButton_19->setChecked(false); actualice_list(8);}

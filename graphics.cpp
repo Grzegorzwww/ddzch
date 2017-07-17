@@ -6,18 +6,14 @@ Graphics::Graphics(Ui::MainWindow *_ui, QWidget *parent) : QWidget(parent),ui(_u
     inicjalizeGraphicsGUI();
     
     initParam();
+
+
+    //ui->label_22->setText(QCoreApplication::applicationDirPath());
+
+
     
-    
-
-    zapiszButton = msgBox.addButton(trUtf8("DODAJ"), QMessageBox::YesRole);
-    anulujButton = msgBox.addButton(trUtf8("ANULUJ"), QMessageBox::NoRole);
-    usunButton = msgBox.addButton(trUtf8("USUŃ"), QMessageBox::RejectRole);
-
-
 
     connect(ui->pushButton_3, SIGNAL(clicked(bool)), this, SLOT(on_menu_wprowadz_wszystko_clicked(bool)));
-    connect(ui->pushButton_4, SIGNAL(clicked(bool)), this, SLOT(on_menu_modyfikuj_wybrane_clicked(bool)));
-   // connect(ui->pushButton_6, SIGNAL(clicked(bool)), this, SLOT(on_menu_dodaj_parametr_clicked(bool)));
     connect(ui->pushButton, SIGNAL(clicked(bool)), this, SLOT(on_save_data_button_clicked(bool)));
     connect(ui->pushButton_5, SIGNAL(clicked(bool)), this, SLOT(on_wstecz_clicked(bool)));
     connect(ui->pushButton_7, SIGNAL(clicked(bool)), this, SLOT(on_next_clicked(bool)));
@@ -351,8 +347,9 @@ void Graphics::actualiceGraphicsGUI(Parameters_t param){
         ui->pushButton_15->setChecked(true);
     }
     
-    ui->horizontalSlider_6->setValue(parameters.water.value);
-    ui->label_15->setText(QString::number(parameters.water.value));
+    ui->horizontalSlider_6->setValue(parameters.water.value / 10 );
+    ui->label_15->setText(QString::number(parameters.water.value  ));
+
     
     if(parameters.sleep.state){
         ui->pushButton_16->setChecked(true);
@@ -810,7 +807,6 @@ void Graphics::on_dodaj_food_clicked(){
     }
     
     ui->textEdit_4->clear();
-    
 }
 
 
@@ -836,16 +832,17 @@ void Graphics::on_tableView_clicked(QModelIndex index)
     }
 
 
-
+    msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+    msgBox.setDefaultButton(QMessageBox::Save);
     msgBox.setText("Co zrobić z:  "+kosmo_list.at(index.row())+" ?");
-    msgBox.exec();
+    int ret = msgBox.exec();
 
 
-    if(msgBox.clickedButton() == zapiszButton){
+    if(ret == QMessageBox::Save){
         parameters.kosmo.rano.append(kosmo_list.at(index.row()));
         QColor rowColor = Qt::red;
         ui->tableView->model()->setData(ui->tableView->model()->index(index.row(), 0),rowColor, Qt::ForegroundRole );
-    }else if(msgBox.clickedButton() == usunButton){
+    }else if(ret == QMessageBox::Discard){
         removeItemFromList(kosmo_list, "KosmoList", kosmo_list.at(index.row()));
     }
 
@@ -859,15 +856,19 @@ void Graphics::on_tableView_2_clicked(QModelIndex index){
     }
 
 
+
+    msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+    msgBox.setDefaultButton(QMessageBox::Save);
     msgBox.setText("Czy Dodac \""+kosmo_list.at(index.row())+"\" ?");
-    msgBox.exec();
+    int ret = msgBox.exec();
 
     QColor rowColor = Qt::red;
-    if(msgBox.clickedButton()  == zapiszButton){
+
+    if(ret  == QMessageBox::Save){
         parameters.kosmo.wieczor.append(kosmo_list.at(index.row()));
         QColor rowColor = Qt::red;
         ui->tableView_2->model()->setData(ui->tableView_2->model()->index(index.row(), 0),rowColor, Qt::ForegroundRole );
-    } else if(msgBox.clickedButton() == usunButton){
+    } else if(ret == QMessageBox::Discard){
         removeItemFromList(kosmo_list, "KosmoList", kosmo_list.at(index.row()));
     }
 }
@@ -896,13 +897,14 @@ void Graphics::on_tableView_3_clicked(QModelIndex index){
     actualice_list(16);
     QColor rowColor = Qt::red;
 
-
+    msgBox.setStandardButtons(QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+    msgBox.setDefaultButton(QMessageBox::Save);
     msgBox.setText("Co zrobić : \""+getActualFoodList().at(index.row())+"\" ?");
-    msgBox.exec();
+    int ret = msgBox.exec();
 
 
 
-    if (msgBox.clickedButton() == zapiszButton) {
+    if (ret == QMessageBox::Save) {
         if(ui->radioButton_6->isChecked() ){
             parameters.food.sniadanie.append(getActualFoodList().at(index.row()));
             ui->tableView_3->model()->setData(ui->tableView_3->model()->index(index.row(), 0),rowColor, Qt::ForegroundRole );
@@ -924,7 +926,7 @@ void Graphics::on_tableView_3_clicked(QModelIndex index){
             qDebug() << parameters.food.inne;
         }
     }
-    else if(msgBox.clickedButton() ==  usunButton) {
+    else if(ret ==  QMessageBox::Discard) {
         if(ui->radioButton->isChecked() ){
             removeItemFromList(posilki_list, "PosilkiLog", posilki_list.at(index.row()));
             readListFromIniFile(posilki_list, "PosilkiLog");
